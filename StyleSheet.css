@@ -1,0 +1,104 @@
+﻿		:root {
+    --primary-color: #1976D2;
+    --secondary-color: #E3F2FD;
+    --accent-color: #FFFFFF;
+}
+
+		body {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+        .custom-header {
+    background-color: var(--primary-color);
+}
+
+        .custom-header .navbar-brand {
+    color: var(--accent-color);
+}
+        .product-card {
+            height: 100%;
+            transition: transform 0.3s ease;
+            background-color: #FFFFFF;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        .product-image {
+            height: 200px;
+            object-fit: cover;
+        }
+        #cartButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: #dbd08c;
+            border-color: #dbd08c;
+        }
+        .quantity-control {
+            width: 120px;
+        }
+        .quantity-input {
+            width: 40px;
+            text-align: center;
+            border: none;
+            background-color: transparent;
+        }
+        .footer {
+    background-color: var(--primary-color);
+    color: var(--accent-color);
+}
+        .product-heading {
+            font-size: 1.5em;
+            text-align: left;
+            margin-bottom: 15px;
+            color: #dbd08c;
+        }
+        .btn-outline-secondary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+        .btn-outline-secondary:hover {
+    color: var(--accent-color);
+    background-color: var(--primary-color);
+}
+       .footer .section {
+            flex: 1;
+            padding: 20px;
+            min-width: 200px;
+        }
+        .footer .section h3 {
+            margin-top: 0;
+        }
+        .footer .social-icons {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: left;
+        }
+        .footer .social-icons li {
+            margin: 0 10px;
+        }
+        .footer .social-icons a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+        }
+  #loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}       
