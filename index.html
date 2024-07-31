@@ -40,14 +40,28 @@
             height: 200px;
             object-fit: cover;
         }
-        #cartButton {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            background-color: #dbd08c;
-            border-color: #dbd08c;
-        }
+        
+		#cartButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    background-color: #4a4a4a;
+    border-color: #4a4a4a;
+    color: #ffffff;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    padding: 10px 20px;
+    font-size: 1.1em;
+}
+
+#cartButton:hover {
+    background-color: #333333;
+    border-color: #333333;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+		
         .quantity-control {
             width: 120px;
         }
