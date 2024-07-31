@@ -368,7 +368,8 @@ function updateColors(primaryColor, secondaryColor, accentColor) {
 }
 
 
-        function createProductCard(index) {
+        
+		function createProductCard(index) {
     const product = products[index];
     const productCard = document.createElement('div');
     productCard.className = 'col';
@@ -378,14 +379,13 @@ function updateColors(primaryColor, secondaryColor, accentColor) {
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title">${product.code}</h5>
                 
-			<p class="card-text">
-    ${product.oldPrice > product.price ? 
-        `<span style="color: red;" class="text-decoration-line-through">AED ${product.oldPrice.toFixed(2)}</span> ` : 
-        ''}
-    <span class="text-primary">AED ${product.price.toFixed(2)}</span>
-</p>
-				
-				
+                <p class="card-text">
+                    ${product.oldPrice > product.price ? 
+                        `<span style="color: red;" class="text-decoration-line-through">AED ${product.oldPrice.toFixed(2)}</span><br>` : 
+                        ''}
+                    <span class="text-primary fw-bold">AED ${product.price.toFixed(2)}</span>
+                </p>
+                
                 <div class="mt-auto">
                     <div class="input-group quantity-control">
                         <button class="btn btn-outline-secondary" type="button" onclick="changeQuantity(${index}, -1)">
