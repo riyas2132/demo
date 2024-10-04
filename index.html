@@ -136,7 +136,23 @@
 .spinner-border {
     width: 3rem;
     height: 3rem;
-}       
+}   
+.out-of-stock {
+        opacity: 0.7;
+    }
+    
+    .out-of-stock img {
+        filter: grayscale(100%);
+    }
+    
+    .out-of-stock .card-body {
+        position: relative;
+    }
+    
+    .text-danger.fw-bold {
+        font-size: 1.2em;
+        margin-top: auto;
+    }    
     </style>
 </head>
 <body>
@@ -347,7 +363,8 @@ function loadSheetsData() {
                     oldPrice: parseFloat(row[4]), 
                     image: row[2], 
                     category: row[3],
-					kg: parseFloat(row[5]) || 1 // New KG value, default to 1 if not provided					
+					kg: parseFloat(row[5]) || 1, // New KG value, default to 1 if not provided		
+					stock: parseInt(row[6]) || 0					
                 });
                 if (!categories.includes(row[3])) {
                     categories.push(row[3]);
@@ -393,10 +410,11 @@ function updateColors(primaryColor, secondaryColor, accentColor) {
 		// Update the createProductCard function to display KG information
 function createProductCard(index) {
     const product = products[index];
+    const isOutOfStock = product.stock === 0;
     const productCard = document.createElement('div');
     productCard.className = 'col';
     productCard.innerHTML = 
-        `<div class="card h-100 product-card">
+        `<div class="card h-100 product-card ${isOutOfStock ? 'out-of-stock' : ''}">
             <img src="${product.image}" class="card-img-top product-image" alt="${product.code}">
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title">${product.code}</h5>
@@ -409,19 +427,22 @@ function createProductCard(index) {
                         ${product.kg && product.kg !== 1 ? `/Kg` : ''}
                     </span>
                 </p>
-                <div class="mt-auto">
-                    <div class="d-flex align-items-center">
-                        <button class="btn btn-outline-secondary" type="button" onclick="changeQuantity(${index}, -1)">
-                            <i class="bi bi-dash"></i>
-                        </button>
-                        <div class="mx-2 text-center" style="min-width: 60px;">
-                            <span id="quantity-${index}">${cart[index] || 0}</span>
+                ${isOutOfStock ? 
+                    '<p class="text-danger fw-bold">Out of Stock</p>' :
+                    `<div class="mt-auto">
+                        <div class="d-flex align-items-center">
+                            <button class="btn btn-outline-secondary" type="button" onclick="changeQuantity(${index}, -1)">
+                                <i class="bi bi-dash"></i>
+                            </button>
+                            <div class="mx-2 text-center" style="min-width: 60px;">
+                                <span id="quantity-${index}">${cart[index] || 0}</span>
+                            </div>
+                            <button class="btn btn-outline-secondary" type="button" onclick="changeQuantity(${index}, 1)">
+                                <i class="bi bi-plus"></i>
+                            </button>
                         </div>
-                        <button class="btn btn-outline-secondary" type="button" onclick="changeQuantity(${index}, 1)">
-                            <i class="bi bi-plus"></i>
-                        </button>
-                    </div>
-                </div>
+                    </div>`
+                }
             </div>
         </div>`;
     return productCard;
@@ -489,13 +510,21 @@ function setCategoryAndFilter(category) {
 
 function changeQuantity(index, change) {
     const product = products[index];
+    
+    // Check if product is out of stock
+    if (product.stock === 0) {
+        return; // Do nothing if out of stock
+    }
+    
     const kgIncrement = product.kg;
     const quantitySpan = document.getElementById(`quantity-${index}`);
     const modalQuantitySpan = document.getElementById(`modal-quantity-${index}`);
     
     let currentQuantity = cart[index] || 0;
     let newQuantity = currentQuantity + (change * kgIncrement);
-    newQuantity = Math.max(0, newQuantity); // Ensure quantity doesn't go below 0
+    
+    // Ensure new quantity doesn't exceed available stock
+    newQuantity = Math.min(Math.max(0, newQuantity), product.stock);
 
     if (newQuantity === 0) {
         delete cart[index];
