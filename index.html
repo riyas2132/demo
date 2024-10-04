@@ -548,10 +548,11 @@ function changeQuantity(index, change) {
 
         function clearCart() {
     cart = {};
+    // Update quantity displays in product cards
     products.forEach((product, index) => {
-        const quantityInput = document.getElementById(`quantity-${index}`);
-        if (quantityInput) {
-            quantityInput.value = 0;
+        const quantitySpan = document.getElementById(`quantity-${index}`);
+        if (quantitySpan) {
+            quantitySpan.textContent = '0';
         }
     });
     updateCartButton();
